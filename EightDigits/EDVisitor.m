@@ -117,9 +117,10 @@ static EDVisitor *_currentVisitor = nil;
 	[request setPostValue:self.visit.authToken forKey:@"authToken"];
 	[request setPostValue:self.visit.trackingCode forKey:@"trackingCode"];
 	
+    __weak typeof(request) weakrequest = request;
 	[request setCompletionBlock:^(void){
 	
-		NSDictionary *dict = [request.responseString objectFromJSONString];
+		NSDictionary *dict = [weakrequest.responseString objectFromJSONString];
 		
 		NSInteger result = [[[dict objectForKey:@"result"] objectForKey:@"code"] intValue];
 		
@@ -130,7 +131,7 @@ static EDVisitor *_currentVisitor = nil;
 				completionHandler(nil, error);
 			}
 			if (self.visit.logging) {
-				NSLog(@"8digits: Failed to load badges for %@, reason: %@", self.visitorCode, error);
+				DLog(@"8digits: Failed to load badges for %@, reason: %@", self.visitorCode, error);
 			}
 		}
 		
@@ -140,14 +141,14 @@ static EDVisitor *_currentVisitor = nil;
 				completionHandler(self.badges, nil);
 			}
 			if (self.visit.logging) {
-				NSLog(@"8digits: Loaded %i badges for %@", self.badges.count, self.visitorCode);
+				DLog(@"8digits: Loaded %i badges for %@", self.badges.count, self.visitorCode);
 			}
 		}
 		
 	}];
 	
 	[request setFailedBlock:^(void){
-		NSString *error = [request.error localizedDescription];
+		NSString *error = [weakrequest.error localizedDescription];
 		self.accountBadges = nil;
 		if (completionHandler) {
 			completionHandler(nil, error);
@@ -170,9 +171,10 @@ static EDVisitor *_currentVisitor = nil;
 	[request setPostValue:self.visitorCode forKey:@"visitorCode"];
 	[request setPostValue:self.visit.trackingCode forKey:@"trackingCode"];
 	
+    __weak typeof(request) weakrequest = request;
 	[request setCompletionBlock:^(void){
         
-		NSDictionary *dict = [request.responseString objectFromJSONString];
+		NSDictionary *dict = [weakrequest.responseString objectFromJSONString];
 		
 		NSInteger result = [[[dict objectForKey:@"result"] objectForKey:@"code"] intValue];
 		
@@ -200,7 +202,7 @@ static EDVisitor *_currentVisitor = nil;
 	}];
 	
 	[request setFailedBlock:^(void){
-		NSString *error = [request.error localizedDescription];
+		NSString *error = [weakrequest.error localizedDescription];
 		self.badges = nil;
 		if (completionHandler) {
 			completionHandler(nil, error);
@@ -225,9 +227,10 @@ static EDVisitor *_currentVisitor = nil;
 	[request setPostValue:self.visitorCode forKey:@"visitorCode"];
 	[request setPostValue:self.visit.trackingCode forKey:@"trackingCode"];
 	
+    __weak typeof(request) weakrequest = request;
 	[request setCompletionBlock:^(void){
 		
-		NSDictionary *dict = [request.responseString objectFromJSONString];
+		NSDictionary *dict = [weakrequest.responseString objectFromJSONString];
 		
 		NSInteger result = [[[dict objectForKey:@"result"] objectForKey:@"code"] intValue];
 		
@@ -258,7 +261,7 @@ static EDVisitor *_currentVisitor = nil;
 	}];
 	
 	[request setFailedBlock:^(void){
-		NSString *error = [request.error localizedDescription];
+		NSString *error = [weakrequest.error localizedDescription];
 		self.score = EDVisitorScoreNotLoaded;
 		if (completionHandler) {
 			completionHandler(self.score, error);
@@ -282,9 +285,10 @@ static EDVisitor *_currentVisitor = nil;
 	[request setPostValue:self.visit.trackingCode forKey:@"trackingCode"];
 	[request setPostValue:[NSString stringWithFormat:@"%i", differential] forKey:@"value"];
 	
+    __weak typeof(request) weakrequest = request;
 	[request setCompletionBlock:^(void){
 		
-		NSDictionary *dict = [request.responseString objectFromJSONString];
+		NSDictionary *dict = [weakrequest.responseString objectFromJSONString];
 		
 		NSInteger result = [[[dict objectForKey:@"result"] objectForKey:@"code"] intValue];
 		
@@ -312,7 +316,7 @@ static EDVisitor *_currentVisitor = nil;
 	}];
 	
 	[request setFailedBlock:^(void){
-		NSString *error = [request.error localizedDescription];
+		NSString *error = [weakrequest.error localizedDescription];
 		self.score = EDVisitorScoreNotLoaded;
 		if (completionHandler) {
 			completionHandler(self.score, error);
@@ -336,9 +340,10 @@ static EDVisitor *_currentVisitor = nil;
 	[request setPostValue:self.visit.trackingCode forKey:@"trackingCode"];
 	[request setPostValue:[NSString stringWithFormat:@"%i", differential] forKey:@"value"];
 	
+    __weak typeof(request) weakrequest = request;
 	[request setCompletionBlock:^(void){
 	
-		NSDictionary *dict = [request.responseString objectFromJSONString];
+		NSDictionary *dict = [weakrequest.responseString objectFromJSONString];
 		
 		NSInteger result = [[[dict objectForKey:@"result"] objectForKey:@"code"] intValue];
 		
@@ -366,7 +371,7 @@ static EDVisitor *_currentVisitor = nil;
 	}];
 	
 	[request setFailedBlock:^(void){
-		NSString *error = [request.error localizedDescription];
+		NSString *error = [weakrequest.error localizedDescription];
 		self.score = EDVisitorScoreNotLoaded;
 		if (completionHandler) {
 			completionHandler(self.score, error);
@@ -415,9 +420,10 @@ static EDVisitor *_currentVisitor = nil;
 	[request setPostValue:keyString forKey:@"keys"];
     [request setPostValue:valueString forKey:@"values"];
 	
+    __weak typeof(request) weakrequest = request;
 	[request setCompletionBlock:^(void){
         
-		NSDictionary *dict = [request.responseString objectFromJSONString];
+		NSDictionary *dict = [weakrequest.responseString objectFromJSONString];
 		
 		NSInteger result = [[[dict objectForKey:@"result"] objectForKey:@"code"] intValue];
 		
@@ -446,7 +452,7 @@ static EDVisitor *_currentVisitor = nil;
 	}];
 	
 	[request setFailedBlock:^(void){
-		NSString *error = [request.error localizedDescription];
+		NSString *error = [weakrequest.error localizedDescription];
 		self.score = EDVisitorScoreNotLoaded;
 		if (completionHandler) {
 			completionHandler(error);

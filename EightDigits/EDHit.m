@@ -194,25 +194,26 @@
 	
 	__unsafe_unretained EDHit *selfHit = self;
 	
+    __weak typeof(self) weakSelf = self;
 	[_startRequest setCompletionBlock:^(void) {
 		
-		if (self.visit.logging) {
-			NSLog(@"8digits: Hit %@ (%@) did start", self.path, self.hitCode);
+		if (weakSelf.visit.logging) {
+			DLog(@"8digits: Hit %@ (%@) did start", weakSelf.path, weakSelf.hitCode);
 		}
 
-		NSDictionary *dict = [self.startRequest.responseString objectFromJSONString];
-		self.hitCode = [[dict objectForKey:@"data"] objectForKey:@"hitCode"];
+		NSDictionary *dict = [weakSelf.startRequest.responseString objectFromJSONString];
+		weakSelf.hitCode = [[dict objectForKey:@"data"] objectForKey:@"hitCode"];
 		
-		self.registered = YES;
-		[self.visit hitDidStart:selfHit];
+		weakSelf.registered = YES;
+		[weakSelf.visit hitDidStart:selfHit];
 		
-		[self.eventArray makeObjectsPerformSelector:@selector(trigger)];
+		[weakSelf.eventArray makeObjectsPerformSelector:@selector(trigger)];
 		
 	}];
 	
 	[_startRequest setFailedBlock:^(void){
-		if (self.visit.logging) {
-			NSLog(@"8digits: Hit %@ (%@) did fail to start: %@", self.path, self.hitCode, self.startRequest.error.localizedDescription);
+		if (weakSelf.visit.logging) {
+			DLog(@"8digits: Hit %@ (%@) did fail to start: %@", weakSelf.path, weakSelf.hitCode, weakSelf.startRequest.error.localizedDescription);
 		}
 	}];
 	
@@ -236,16 +237,17 @@
 	
 	__unsafe_unretained EDHit *selfHit = self;
 	
+    __weak typeof(self) weakSelf = self;
 	[_endRequest setCompletionBlock:^(void){
-		if (self.visit.logging) {
-			NSLog(@"8digits: Hit %@ (%@) did end", self.path, self.hitCode);
+		if (weakSelf.visit.logging) {
+			DLog(@"8digits: Hit %@ (%@) did end", weakSelf.path, weakSelf.hitCode);
 		}
-		[self.visit hitDidEnd:selfHit];
+		[weakSelf.visit hitDidEnd:selfHit];
 	}];
 	
 	[_endRequest setFailedBlock:^(void) {
-		if (self.visit.logging) {
-			NSLog(@"8digits: Hit %@ (%@) did fail to end: %@", self.path, self.hitCode, self.endRequest.error.localizedDescription);
+		if (weakSelf.visit.logging) {
+			DLog(@"8digits: Hit %@ (%@) did fail to end: %@", weakSelf.path, weakSelf.hitCode, weakSelf.endRequest.error.localizedDescription);
 		}
 	}];
 	

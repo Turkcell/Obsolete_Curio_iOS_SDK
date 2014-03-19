@@ -403,14 +403,15 @@ static EDVisit	*_currentVisit = nil;
 	
 	__unsafe_unretained EDVisit *selfVisit = self;
 	
+    __weak typeof(self) weakSelf = self;
 	[self.authRequest setCompletionBlock:^(void){
-		self.authorising = NO;
+		weakSelf.authorising = NO;
 		
-		NSDictionary *dict = [self.authRequest.responseString objectFromJSONString];
-		self.authToken = [[dict objectForKey:@"data"] objectForKey:@"authToken"];
+		NSDictionary *dict = [weakSelf.authRequest.responseString objectFromJSONString];
+		weakSelf.authToken = [[dict objectForKey:@"data"] objectForKey:@"authToken"];
 		
 		NSInteger result = [[[dict objectForKey:@"result"] objectForKey:@"code"] intValue];		
-		self.authorised = YES;
+		weakSelf.authorised = YES;
 		
 		if (result != 0) {
 			NSString *error = [[dict objectForKey:@"result"] objectForKey:@"message"];
@@ -424,8 +425,8 @@ static EDVisit	*_currentVisit = nil;
 	}];
 	
 	[self.authRequest setFailedBlock:^(void){
-		self.authorising = NO;
-		NSString *error = [[self.visitRequest error] localizedDescription];
+		weakSelf.authorising = NO;
+		NSString *error = [[weakSelf.visitRequest error] localizedDescription];
 		[selfVisit failWithError:error];
 	}];
 
@@ -485,8 +486,9 @@ static EDVisit	*_currentVisit = nil;
     
 	__unsafe_unretained EDVisit *selfVisit = self;
 	
+    __weak typeof(self) weakSelf = self;
 	[self.visitRequest setCompletionBlock:^(void){
-		NSDictionary *dict = [self.visitRequest.responseString objectFromJSONString];
+		NSDictionary *dict = [weakSelf.visitRequest.responseString objectFromJSONString];
 		
 		NSInteger result = [[[dict objectForKey:@"result"] objectForKey:@"code"] intValue];		
 		
@@ -496,14 +498,14 @@ static EDVisit	*_currentVisit = nil;
 		}
 		
 		else {
-			self.sessionCode = [[dict objectForKey:@"data"] objectForKey:@"sessionCode"];
+			weakSelf.sessionCode = [[dict objectForKey:@"data"] objectForKey:@"sessionCode"];
 			[selfVisit succeed];
 		}
 		
 	}];
 	
 	[self.visitRequest setFailedBlock:^(void){
-		NSString *error = [[self.visitRequest error] localizedDescription];
+		NSString *error = [[weakSelf.visitRequest error] localizedDescription];
 		[selfVisit failWithError:error];
 	}];
 	

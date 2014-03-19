@@ -198,7 +198,7 @@
 	[_startRequest setCompletionBlock:^(void) {
 		
 		if (weakSelf.visit.logging) {
-			DLog(@"8digits: Hit %@ (%@) did start", weakSelf.path, weakSelf.hitCode);
+			NSLog(@"8digits: Hit %@ (%@) did start", weakSelf.path, weakSelf.hitCode);
 		}
 
 		NSDictionary *dict = [weakSelf.startRequest.responseString objectFromJSONString];
@@ -213,7 +213,7 @@
 	
 	[_startRequest setFailedBlock:^(void){
 		if (weakSelf.visit.logging) {
-			DLog(@"8digits: Hit %@ (%@) did fail to start: %@", weakSelf.path, weakSelf.hitCode, weakSelf.startRequest.error.localizedDescription);
+			NSLog(@"8digits: Hit %@ (%@) did fail to start: %@", weakSelf.path, weakSelf.hitCode, weakSelf.startRequest.error.localizedDescription);
 		}
 	}];
 	
@@ -240,14 +240,14 @@
     __weak typeof(self) weakSelf = self;
 	[_endRequest setCompletionBlock:^(void){
 		if (weakSelf.visit.logging) {
-			DLog(@"8digits: Hit %@ (%@) did end", weakSelf.path, weakSelf.hitCode);
+			NSLog(@"8digits: Hit %@ (%@) did end", weakSelf.path, weakSelf.hitCode);
 		}
 		[weakSelf.visit hitDidEnd:selfHit];
 	}];
 	
 	[_endRequest setFailedBlock:^(void) {
 		if (weakSelf.visit.logging) {
-			DLog(@"8digits: Hit %@ (%@) did fail to end: %@", weakSelf.path, weakSelf.hitCode, weakSelf.endRequest.error.localizedDescription);
+			NSLog(@"8digits: Hit %@ (%@) did fail to end: %@", weakSelf.path, weakSelf.hitCode, weakSelf.endRequest.error.localizedDescription);
 		}
 	}];
 	

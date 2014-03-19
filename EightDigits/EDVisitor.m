@@ -131,7 +131,7 @@ static EDVisitor *_currentVisitor = nil;
 				completionHandler(nil, error);
 			}
 			if (self.visit.logging) {
-				DLog(@"8digits: Failed to load badges for %@, reason: %@", self.visitorCode, error);
+				NSLog(@"8digits: Failed to load badges for %@, reason: %@", self.visitorCode, error);
 			}
 		}
 		
@@ -141,7 +141,7 @@ static EDVisitor *_currentVisitor = nil;
 				completionHandler(self.badges, nil);
 			}
 			if (self.visit.logging) {
-				DLog(@"8digits: Loaded %i badges for %@", self.badges.count, self.visitorCode);
+				NSLog(@"8digits: Loaded %i badges for %@", self.badges.count, self.visitorCode);
 			}
 		}
 		

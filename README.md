@@ -53,7 +53,7 @@ Eğer uygulamanıza daha önceden eklenmiş [ASIHTTP](http://allseeing-i.com/ASI
 
 Curio klasörünü tümüyle tutarak proje ekranındaki diğer dosyalarınızın arasına sürükleyin. Çıkan diyalog penceresinden *Copy items into destination group's folder* seçeneğinin ve proje targetlarınızın seçili olduğundan emin olun ve **Finish** butonuna tıklayın. 
 
-![Dosyaları ekleyin](Curio-iOS-SDK/raw/master/figures/figure0.png)
+![Dosyaları ekleyin](Curio-iOS-SDK/master/figures/figure0.png)
 
 ###ARC Desteği
 `ASIHTTP` ve `JSONKit` kütüphaneleri Automatic Reference Counting (ARC) teknolojisini desteklemez. Eğer projenizde ARC'ı aktifleştirdiyseniz şu adımları uygulamanız gerekmektedir:
@@ -66,7 +66,7 @@ Curio klasörünü tümüyle tutarak proje ekranındaki diğer dosyalarınızın
 6. Açılan küçük pencereye `-fno-objc-arc` yazın ve entera basın.
 7. *5.* ve *6.* işlemleri birer birer `ASIDataCompressor.m`, `ASIDataDecompressor.m`, `ASIDownloadCache.m`, `ASIFormDataRequest.m`, `ASIHTTPRequest.m`, `ASIInputStream.m`, `ASINetworkQueue` ve `JSONKit.m` dosyaları için yapın.
 
-![image](Curio-iOS-SDK/raw/master/figures/figure1.png)
+![image](Curio-iOS-SDK/master/figures/figure1.png)
 
 Bu işlemleri yaptıktan sonra eklediğiniz kütüphaneler ARC için hazır hale gelecektir.
 
@@ -82,7 +82,7 @@ Bu işlemleri yaptıktan sonra eklediğiniz kütüphaneler ARC için hazır hale
 6. Çıkan küçük pencereden `MobileCoreServices.framework`'ü seçin ve **Add** butonuna basın.
 7. *5.* ve *6.* adımları `libz.dylib`, `SystemConfiguration.framework`, `CFNetwork.framework` ve `Security.framework` için uygulayın.
 
-![image](Curio-iOS-SDK/raw/master/figures/figure2.png)
+![image](Curio-iOS-SDK/master/figures/figure2.png)
 
 Bu adımları uyguladıktan sonra kütüphaneler için gereken framework desteğini de sağlamış olacaksınız.
 
